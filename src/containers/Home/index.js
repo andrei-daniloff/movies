@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import axios from 'axios';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import MovieCard from '../../components/MovieCard';
 import {withRouter} from 'react-router-dom';
 import queryString from 'query-string'
 
-const API = '8c7720742602f6274d23061fa907cb34';
-
+ 
 class Home extends Component {
   state = {
     movies: null,
@@ -27,8 +26,7 @@ class Home extends Component {
   
 
   componentDidMount() {     
-     this.fetchMovies();
-            
+     this.fetchMovies();            
   }
 
   
@@ -73,6 +71,6 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {};
+// Home.propTypes = {};
 
 export default withRouter(Home);

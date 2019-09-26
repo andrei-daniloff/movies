@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Img = styled.img`
@@ -35,6 +35,6 @@ const MovieCard = ({ imageURL, id, title }) => {
   );
 };
 
-MovieCard.propTypes = {};
+// MovieCard.propTypes = {};
 
 export default MovieCard;

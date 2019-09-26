@@ -1,25 +1,52 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+// import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import BurgerButton from '../../UI/BurgerButton';
 
 const Wrapper = styled.div`
   position: fixed;
   height: 100%;
   width: 300px;
-  background-color: #cecece;
-  opacity: 0.8;
+  background-color: #000;
+  opacity: 0;
   display: flex;
   flex-direction: column;
+  transform: translateX(-100%);
+  transition: all 0.5s ease 0s;
+  .active {
+    border: 1px solid #fff;
+    border-radius: 10px;
+  }
+  ${props =>
+    props.openMenu &&
+    css`
+      opacity: 0.8;
+      transform: translateX(0);
+    `}
 `;
 
-const SideDrawn = ({ list }) => {
+const DisplayFlex = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Link = styled(NavLink)`
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  text-decoration: none;
+  margin: 5px auto;
+  width: 50%;
+`;
+
+const SideDrawn = ({ list, openMenu, onOpenMenu }) => {
   let genres;
   if (!list) {
     genres = <h1>Loading</h1>;
   } else {
     genres = list.map(genre => (
-      <NavLink
+      <Link
         key={genre.id}
         to={{
           pathname: `/genres/${genre.name}`,
@@ -27,11 +54,17 @@ const SideDrawn = ({ list }) => {
         }}
       >
         {genre.name}
-      </NavLink>
+      </Link>
     ));
   }
-  console.log(list);
-  return <Wrapper>{genres}</Wrapper>;
+  return (
+    <Wrapper openMenu={openMenu}>
+      <DisplayFlex>
+        <BurgerButton func={onOpenMenu} menu />
+      </DisplayFlex>
+      {genres}
+    </Wrapper>
+  );
 };
 
 SideDrawn.propTypes = {};

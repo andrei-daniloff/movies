@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Home from './containers/Home';
 import Menu from './components/Menu';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
@@ -7,7 +7,8 @@ import axios from 'axios'
 
 class App extends Component {
   state = {
-    listGenres: null
+    listGenres: null,
+    openMenu: false
   }
 
   componentDidMount() {
@@ -15,12 +16,17 @@ class App extends Component {
     .then(res => this.setState({listGenres:res.data.genres}))
     .catch(err => console.log(err))
   }
+
+  onOpenMenu = () => {
+    this.setState((prevState) => ({openMenu: !prevState.openMenu}))
+  }
   
   render() {
-    const {listGenres} = this.state;
+    const {listGenres, openMenu} = this.state;
+    const {onOpenMenu} = this;
     return (
       <div className="container">
-        <Menu list={listGenres}/>
+        <Menu list={listGenres} onOpenMenu={onOpenMenu} openMenu={openMenu}/>
         <Switch>
           <Route path="/" exact render={() => <Redirect from="/" to="/discover/Popular" />} />
           <Route path="/discover/:genre" component={Home} />
