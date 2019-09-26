@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Home from './containers/Home';
+import Menu from './components/Menu';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import axios from 'axios'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    listGenres: null
+  }
+
+  componentDidMount() {
+    axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=8c7720742602f6274d23061fa907cb34&language=en-US')
+    .then(res => this.setState({listGenres:res.data.genres}))
+    .catch(err => console.log(err))
+  }
+  
+  render() {
+    const {listGenres} = this.state;
+    return (
+      <div className="container">
+        <Menu list={listGenres}/>
+        <Switch>
+          <Route path="/" exact render={() => <Redirect from="/" to="/discover/Popular" />} />
+          <Route path="/discover/:genre" component={Home} />
+          <Route path="/genres/:genre" component={Home} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
-export default App;
+App.propTypes = {};
+
+export default withRouter(App);
