@@ -5,7 +5,8 @@ import axios from 'axios';
 import MovieCard from '../../components/MovieCard';
 import {withRouter} from 'react-router-dom';
 import queryString from 'query-string'
-import Pagination from '../../components/UI/Pagination'
+import Pagination from '../../components/UI/Pagination';
+import { animateScroll as scroll } from "react-scroll";
 
  
 class Home extends Component {
@@ -18,16 +19,11 @@ class Home extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log('CDU MATCh', this.props)
-     const parsedSearch = queryString.parse(this.props.location.search);
-     console.log(parsedSearch.id === 'null')
-     if ( (parsedSearch.id === 'null') && ((this.props.match.params.genre !== this.state.genre)||(this.state.currentPage !== parsedSearch.page))){
+    const parsedSearch = queryString.parse(this.props.location.search);
+    console.log(parsedSearch.id === 'null')
+    if ( (parsedSearch.id === 'null') && ((this.props.match.params.genre !== this.state.genre)||(this.state.currentPage !== parsedSearch.page))){
        this.setState({genre: this.props.match.params.genre, currentPage: parsedSearch.page},
-        () => this.fetchMovies())}
-    // } else if (parsedSearch.id !== prevState.genreId) {
-    //  this.setState({genreId: parsedSearch.id}, ()=> this.fetchMovies(parsedSearch.id)) 
-    // } else {
-    //   return;
-    // }
+        () => this.fetchMovies())} 
     if (!(parsedSearch.id === 'null') && ((this.props.match.params.genre !== this.state.genre)||(this.state.currentPage !== parsedSearch.page))){
       this.setState({genre: this.props.match.params.genre, currentPage: parsedSearch.page}, ()=> this.fetchMovies(parsedSearch.id)) 
     }
@@ -39,6 +35,7 @@ class Home extends Component {
 
   fetchMovies = (id = null) => {
     const {genre, currentPage} = this.state;
+    scroll.scrollToTop(); 
     if (!id) {
       axios
       .get(
