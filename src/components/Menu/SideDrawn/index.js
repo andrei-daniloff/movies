@@ -15,6 +15,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   transform: translateX(-100%);
   transition: all 0.3s linear;
+  margin-left: -8px;
+  @media (max-width: 575px) {
+    width: 100%;
+  }
   .active {
     border: 1px solid #fff;
     border-radius: 10px;
@@ -28,7 +32,7 @@ const Wrapper = styled.div`
     `}
 `;
 
-const DisplayFlex = styled.div`
+const WrapperBurgerButton = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
@@ -45,6 +49,11 @@ const Link = styled(NavLink)`
 const GenresTitle = styled.h3`
   color: #fff;
   text-align: center;
+`;
+
+const DisplayFlex = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const SideDrawn = ({ list, openMenu, onOpenMenu }) => {
@@ -66,14 +75,16 @@ const SideDrawn = ({ list, openMenu, onOpenMenu }) => {
   }
   return (
     <Wrapper openMenu={openMenu}>
-      <DisplayFlex>
+      <WrapperBurgerButton>
         <BurgerButton func={onOpenMenu} menu />
-      </DisplayFlex>
+      </WrapperBurgerButton>
       <GenresTitle>Discover</GenresTitle>
-      <Link to="/discover/Popular">Popular</Link>
-      <Link to="/discover/Top_rated">Top Rated</Link>
+      <DisplayFlex onClick={onOpenMenu}>
+        <Link to="/discover/Popular">Popular</Link>
+        <Link to="/discover/Top_rated">Top Rated</Link>
+      </DisplayFlex>
       <GenresTitle>Genres</GenresTitle>
-      {genres}
+      <DisplayFlex onClick={onOpenMenu}>{genres}</DisplayFlex>
     </Wrapper>
   );
 };
