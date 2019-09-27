@@ -12,6 +12,10 @@ const Wrapper = styled.div`
   padding: 10px 0;
   box-sizing: border-box;
   cursor: pointer;
+  @media (max-width: 575px) {
+    padding: 10px;
+    width: 55px;
+  }
   div {
     width: 90%;
     height: 3px;
@@ -25,6 +29,9 @@ const Wrapper = styled.div`
       padding: 10px;
       position: relative;
       transform: rotate(180deg);
+      @media (max-width: 575px) {
+        width: 40px;
+      }
       div {
         background-color: #fff;
         height: 2px;

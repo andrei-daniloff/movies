@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   ${props =>
     props.openMenu &&
     css`
-      opacity: 0.8;
+      opacity: 0.9;
       transition: all 0.3s linear;
       transform: translateX(0);
     `}

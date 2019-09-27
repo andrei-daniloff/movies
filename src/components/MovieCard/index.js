@@ -27,7 +27,7 @@ const IMAGE_API = 'https://image.tmdb.org/t/p/w342';
 
 const MovieCard = ({ imageURL, id, title }) => {
   return (
-    <div className="col-lg-3">
+    <div className="col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-6 col-md-offset-0 col-md-4 col-lg-3">
       <Wrapper>
         <Img src={`${IMAGE_API}${imageURL}`} alt="" />
         <Title>{title}</Title>
