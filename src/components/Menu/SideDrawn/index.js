@@ -66,7 +66,7 @@ const SideDrawn = ({ list, openMenu, onOpenMenu }) => {
         key={genre.id}
         to={{
           pathname: `/genres/${genre.name}`,
-          search: `?id=${genre.id}`
+          search: `?id=${genre.id}&page=1`
         }}
       >
         {genre.name}
@@ -80,8 +80,8 @@ const SideDrawn = ({ list, openMenu, onOpenMenu }) => {
       </WrapperBurgerButton>
       <GenresTitle>Discover</GenresTitle>
       <DisplayFlex onClick={onOpenMenu}>
-        <Link to="/discover/Popular">Popular</Link>
-        <Link to="/discover/Top_rated">Top Rated</Link>
+        <Link to="/discover/Popular/?page=1&id=null">Popular</Link>
+        <Link to="/discover/Top_rated/?page=1&id=null">Top Rated</Link>
       </DisplayFlex>
       <GenresTitle>Genres</GenresTitle>
       <DisplayFlex onClick={onOpenMenu}>{genres}</DisplayFlex>

@@ -28,7 +28,7 @@ class App extends Component {
       <div className="container">
         <Menu list={listGenres} onOpenMenu={onOpenMenu} openMenu={openMenu}/>
         <Switch>
-          <Route path="/" exact render={() => <Redirect from="/" to="/discover/Popular" />} />
+          <Route path="/" exact render={() => <Redirect from="/" to="/discover/Popular/?page=1" />} />
           <Route path="/discover/:genre" component={Home} />
           <Route path="/genres/:genre" component={Home} />
         </Switch>
