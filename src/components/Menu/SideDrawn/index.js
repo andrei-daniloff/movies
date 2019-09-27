@@ -13,8 +13,8 @@ const Wrapper = styled.div`
   opacity: 0;
   display: flex;
   flex-direction: column;
-  transform: translateX(-100%);
-  transition: all 0.3s linear;
+  transform: translateX(-100vw);
+  transition: all 0.3s ease-in-out;
   margin-left: -8px;
   @media (max-width: 575px) {
     width: 100%;
