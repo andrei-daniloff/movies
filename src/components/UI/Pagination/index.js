@@ -27,7 +27,24 @@ const Pagination = props => {
   const { url } = props.match;
   const parsedSearch = queryString.parse(props.location.search);
   let pagination;
-  if (prevPage === 0) {
+  const clientWidth = document.documentElement.clientWidth > 500;
+  if (!clientWidth) {
+    pagination = (
+      <>
+        {prevPage === 0 ? null : (
+          <Link to={`${url}?page=${prevPage}&id=${parsedSearch.id}`}>{prevPage}</Link>
+        )}
+        <Link
+          activeClassName="selected"
+          to={`${url}?page=${props.currentPage}&id=${parsedSearch.id}`}
+        >
+          {props.currentPage}
+        </Link>
+        <Link to={`${url}?page=${nextPage}&id=${parsedSearch.id}`}>{nextPage}</Link>
+      </>
+    );
+  }
+  if (prevPage === 0 && clientWidth) {
     pagination = (
       <>
         <Link to={`${url}?page=1&id=${parsedSearch.id}`}>Start</Link>
@@ -41,7 +58,7 @@ const Pagination = props => {
         <Link to={`${url}?page=500&id=${parsedSearch.id}`}>End</Link>
       </>
     );
-  } else if (nextPage === 501) {
+  } else if (nextPage === 501 && clientWidth) {
     pagination = (
       <>
         <Link to={`${url}?page=1&id=${parsedSearch.id}`}>Start</Link>
@@ -54,7 +71,7 @@ const Pagination = props => {
         </Link>
       </>
     );
-  } else {
+  } else if (nextPage !== 500 && prevPage !== 0 && clientWidth) {
     pagination = (
       <>
         <Link to={`${url}?page=1&id=${parsedSearch.id}`}>Start</Link>
@@ -72,7 +89,7 @@ const Pagination = props => {
   }
 
   return (
-    <div className="col-lg-12">
+    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <Wrapper>{pagination}</Wrapper>
     </div>
   );

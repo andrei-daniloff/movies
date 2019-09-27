@@ -31,6 +31,7 @@ class App extends Component {
           <Route path="/" exact render={() => <Redirect from="/" to="/discover/Popular/?page=1" />} />
           <Route path="/discover/:genre" component={Home} />
           <Route path="/genres/:genre" component={Home} />
+          <Route render={()=> <h1>404</h1>}/>
         </Switch>
       </div>
     );
