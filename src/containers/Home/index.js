@@ -10,17 +10,19 @@ import queryString from 'query-string'
 class Home extends Component {
   state = {
     movies: null,
-    genre: 'Popular' 
+    genre: 'Popular',
+    genreId : null,
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('CDU', this.props.match.params.genre , prevState.genre)
-    if ((this.props.match.params.genre !== prevState.genre) && (this.props.location.search === '')){
-      this.setState({genre: this.props.match.params.genre},
+     const parsedSearch = queryString.parse(this.props.location.search);
+     if ((Object.keys(parsedSearch).length === 0) && (this.props.match.params.genre !== this.state.genre)){
+       this.setState({genre: this.props.match.params.genre},
         () => this.fetchMovies())
-    } else if (this.props.location.search !== '') {
-      const id = queryString.parse(this.props.location.search);
-      this.fetchMovies(id.with_genres)
+    } else if (parsedSearch.id !== prevState.genreId) {
+     this.setState({genreId: parsedSearch.id}, ()=> this.fetchMovies(parsedSearch.id)) 
+    } else {
+      return;
     }
   }
   

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const Img = styled.img`
   width: 100%;
   border-radius: 5px 5px 0px 0px;
+  height: 25rem;
 `;
 
 const Title = styled.h2`
