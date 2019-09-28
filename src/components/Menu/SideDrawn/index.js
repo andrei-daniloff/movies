@@ -81,6 +81,7 @@ const SideDrawn = ({ list, openMenu, onOpenMenu }) => {
       <GenresTitle>Discover</GenresTitle>
       <DisplayFlex onClick={onOpenMenu}>
         <Link to="/discover/Popular/?page=1&id=null">Popular</Link>
+        <Link to="/discover/Upcoming/?page=1&id=null">Upcoming</Link>
         <Link to="/discover/Top_rated/?page=1&id=null">Top Rated</Link>
       </DisplayFlex>
       <GenresTitle>Genres</GenresTitle>
