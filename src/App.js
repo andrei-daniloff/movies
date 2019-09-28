@@ -1,11 +1,12 @@
 import React, { Component,Suspense, lazy } from 'react';
-// import PropTypes from 'prop-types';
-import Menu from './components/Menu';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import Spinner from './components/UI/Spinner'
+// import PropTypes from 'prop-types';
+import Home from './containers/Home';
+import Menu from './components/Menu';
+import Spinner from './components/UI/Spinner';
 
-const Home =  lazy(()=> import('./containers/Home'));
+const Movie = lazy(() => import('./containers/MovieInfo'));
 
 class App extends Component {
   state = {
@@ -34,6 +35,7 @@ class App extends Component {
           <Route path="/" exact render={() => <Redirect from="/" to="/discover/Popular/?page=1" />} />
           <Route path="/discover/:genre" component={Home} />
           <Route path="/genres/:genre" component={Home} />
+          <Route path="/movie/:id" component={Movie} />
           <Route render={()=> <h1>404</h1>}/>
         </Switch>
         </Suspense>

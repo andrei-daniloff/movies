@@ -16,6 +16,7 @@ const Wrapper = styled.div`
   transform: translateX(-100vw);
   transition: all 0.3s ease-in-out;
   margin-left: -8px;
+  z-index: 100;
   @media (max-width: 575px) {
     width: 100%;
   }

@@ -6,13 +6,19 @@ import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 import queryString from 'query-string'
 // import Pagination from '../../components/UI/Pagination';
+import styled from 'styled-components';
 import { animateScroll as scroll } from "react-scroll";
 import Spinner from '../../components/UI/Spinner';
 
-const MovieCard = lazy(()=> import('../../components/MovieCard'))
+const MovieCard = lazy(()=> import('../../components/MovieCard'));
 
-const Pagination = lazy(()=> import('../../components/UI/Pagination'))
+const Pagination = lazy(()=> import('../../components/UI/Pagination'));
  
+const Title = styled.h1`
+  margin-top: 0px;
+  line-height: 2rem;
+`
+
 class Home extends Component {
   state = {
     movies: [],
@@ -24,9 +30,7 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('CDU MATCh', this.props)
     const parsedSearch = queryString.parse(this.props.location.search);
-    console.log(parsedSearch.id === 'null')
     if ( (parsedSearch.id === 'null') && ((this.props.match.params.genre !== this.state.genre)||(this.state.currentPage !== parsedSearch.page))){
        this.setState({loading: true, genre: this.props.match.params.genre, currentPage: parsedSearch.page},
         () => this.fetchMovies())} 
@@ -47,25 +51,29 @@ class Home extends Component {
       .get(
         `https://api.themoviedb.org/3/movie/${genre.toLowerCase()}?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&page=${currentPage}`
         )
-        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}, ()=> console.log('!!!')))
+        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
         .catch(err => console.log(err)); 
     } else {
        axios
       .get(
 `https://api.themoviedb.org/3/discover/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&sort_by=popularity.desc&with_genres=${id}&include_video=false&page=${currentPage}`)
-        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}, ()=> console.log('!!!')))
+        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
         .catch(err => console.log(err)); 
     }
   }
 
   render() {
-    const {movies, currentPage,loading, totalPages } = this.state;
-     let list;
-     if (loading){
+    const {movies, currentPage,loading, totalPages, genre } = this.state;
+    let list;
+    const title = genre.split('_').join(' ')
+    if (loading){
       list = <Spinner/>
     } else {
       list =        
         <Suspense fallback={<Spinner />}>
+        <div className="col-lg-12">
+          <Title>{title}</Title>
+        </div>
           {movies.map(movie => (
           <MovieCard
             imageURL={movie.poster_path}
@@ -74,8 +82,7 @@ class Home extends Component {
           />
           ))}
           <Pagination currentPage={currentPage} totalPages={totalPages}/>
-        </Suspense>       
-      
+        </Suspense>      
     }
     return (
       <div className="row"> 
