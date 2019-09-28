@@ -19,7 +19,8 @@ class Home extends Component {
     genre: 'Popular',
     genreId : null,
     currentPage: 1,
-    loading: false
+    loading: false,
+    totalPages: null
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -46,19 +47,19 @@ class Home extends Component {
       .get(
         `https://api.themoviedb.org/3/movie/${genre.toLowerCase()}?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&page=${currentPage}`
         )
-        .then(res => this.setState({loading: false, movies: res.data.results}, ()=> console.log('!!!')))
+        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}, ()=> console.log('!!!')))
         .catch(err => console.log(err)); 
     } else {
        axios
       .get(
 `https://api.themoviedb.org/3/discover/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&sort_by=popularity.desc&with_genres=${id}&include_video=false&page=${currentPage}`)
-        .then(res => this.setState({loading: false, movies: res.data.results}, ()=> console.log('!!!')))
+        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}, ()=> console.log('!!!')))
         .catch(err => console.log(err)); 
     }
   }
 
   render() {
-    const {movies, currentPage,loading} = this.state;
+    const {movies, currentPage,loading, totalPages } = this.state;
      let list;
      if (loading){
       list = <Spinner/>
@@ -72,7 +73,7 @@ class Home extends Component {
             id={movie.id}
           />
           ))}
-          <Pagination currentPage={currentPage}/>
+          <Pagination currentPage={currentPage} totalPages={totalPages}/>
         </Suspense>       
       
     }

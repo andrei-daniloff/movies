@@ -21,12 +21,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const Pagination = props => {
-  const nextPage = +props.currentPage + 1;
-  const prevPage = +props.currentPage - 1;
-  const { url } = props.match;
+const Pagination = ({ totalPages, currentPage, location, match }) => {
+  const nextPage = +currentPage + 1;
+  const prevPage = +currentPage - 1;
+  const { url } = match;
   let pagination;
-  const parsedSearch = queryString.parse(props.location.search);
+  const parsedSearch = queryString.parse(location.search);
   const clientWidth = document.documentElement.clientWidth > 500;
   if (!clientWidth) {
     pagination = (
@@ -34,11 +34,8 @@ const Pagination = props => {
         {prevPage === 0 ? null : (
           <Link to={`${url}?page=${prevPage}&id=${parsedSearch.id}`}>{prevPage}</Link>
         )}
-        <Link
-          activeClassName="selected"
-          to={`${url}?page=${props.currentPage}&id=${parsedSearch.id}`}
-        >
-          {props.currentPage}
+        <Link activeClassName="selected" to={`${url}?page=${currentPage}&id=${parsedSearch.id}`}>
+          {currentPage}
         </Link>
         <Link to={`${url}?page=${nextPage}&id=${parsedSearch.id}`}>{nextPage}</Link>
       </>
@@ -48,42 +45,33 @@ const Pagination = props => {
     pagination = (
       <>
         <Link to={`${url}?page=1&id=${parsedSearch.id}`}>Start</Link>
-        <Link
-          activeClassName="selected"
-          to={`${url}?page=${props.currentPage}&id=${parsedSearch.id}`}
-        >
-          {props.currentPage}
+        <Link activeClassName="selected" to={`${url}?page=${currentPage}&id=${parsedSearch.id}`}>
+          {currentPage}
         </Link>
         <Link to={`${url}?page=${nextPage}&id=${parsedSearch.id}`}>{nextPage}</Link>
-        <Link to={`${url}?page=500&id=${parsedSearch.id}`}>End</Link>
+        <Link to={`${url}?page=${totalPages}&id=${parsedSearch.id}`}>End</Link>
       </>
     );
-  } else if (nextPage === 501 && clientWidth) {
+  } else if (nextPage > totalPages && clientWidth) {
     pagination = (
       <>
         <Link to={`${url}?page=1&id=${parsedSearch.id}`}>Start</Link>
         <Link to={`${url}?page=${prevPage}&id=${parsedSearch.id}`}>{prevPage}</Link>
-        <Link
-          activeClassName="selected"
-          to={`${url}?page=${props.currentPage}&id=${parsedSearch.id}`}
-        >
-          {props.currentPage}
+        <Link activeClassName="selected" to={`${url}?page=${currentPage}&id=${parsedSearch.id}`}>
+          {currentPage}
         </Link>
       </>
     );
-  } else if (nextPage !== 500 && prevPage !== 0 && clientWidth) {
+  } else if (prevPage !== 0 && clientWidth) {
     pagination = (
       <>
         <Link to={`${url}?page=1&id=${parsedSearch.id}`}>Start</Link>
         <Link to={`${url}?page=${prevPage}&id=${parsedSearch.id}`}>{prevPage}</Link>
-        <Link
-          activeClassName="selected"
-          to={`${url}?page=${props.currentPage}&id=${parsedSearch.id}`}
-        >
-          {props.currentPage}
+        <Link activeClassName="selected" to={`${url}?page=${currentPage}&id=${parsedSearch.id}`}>
+          {currentPage}
         </Link>
         <Link to={`${url}?page=${nextPage}&id=${parsedSearch.id}`}>{nextPage}</Link>
-        <Link to={`${url}?page=500&id=${parsedSearch.id}`}>End</Link>
+        <Link to={`${url}?page=${totalPages}&id=${parsedSearch.id}`}>End</Link>
       </>
     );
   }
