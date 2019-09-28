@@ -40,13 +40,19 @@ const StyledLink = styled(Link)`
   &:hover {
     border: 1px dashed #ccc;
   }
-  &:focus {
+  &:active {
     border: 1px dashed #ccc;
     color: black;
     transform: scale(0.9);
   }
-  &:nth-child(2) {
+  &:nth-child(2n) {
     margin: 0 10px;
+  }
+  &:visited {
+    color: black;
+  }
+  &:link {
+    color: black;
   }
 `;
 
@@ -66,7 +72,6 @@ const Details = ({ title, genres, overview, duration, release_date, rate }) => {
       {genre.name}
     </StyledLink>
   ));
-  console.log(genres);
   return (
     <Wrapper>
       <Title>{title}</Title>

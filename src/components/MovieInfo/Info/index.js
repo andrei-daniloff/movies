@@ -3,6 +3,12 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import ImgLoader from './Img';
 import Details from './Details';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  display: flex;
+`
+
 
 class Info extends Component {
   state = {
@@ -38,7 +44,9 @@ class Info extends Component {
     return (
       <>
         <div className="col-lg-4">
+        <Wrapper>
           <ImgLoader imageURL={poster} infoCard/>
+        </Wrapper>
         </div>
         <div className="col-lg-8">
           <Details {...this.state}/>

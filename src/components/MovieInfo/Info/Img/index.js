@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import rocket from '../../../../images/rocket.svg';
 
@@ -17,6 +17,9 @@ const Img = styled.img`
   &:hover {
     transform: ${props => props.infoCard ? 'scale(1)' : 'scale(1.02)'}; 
   }
+  ${props => props.actors && css`
+    height: 25rem;
+  `}
 `;
 
 class ImgLoader extends Component {
@@ -29,12 +32,13 @@ class ImgLoader extends Component {
     history.push(`/movie/${id}`);  
   }
   render() {
-    const {imageURL, preview, id, infoCard} = this.props;
+    const { imageURL, preview, id, infoCard, actors} = this.props;
     const { loadMoreInfo } = this;
     const { loading } = this.state;
 
     return (
       <Img
+        actors={actors}
         infoCard={infoCard}
         onClick={preview ? () => loadMoreInfo(id) : null}
         loading={loading}
