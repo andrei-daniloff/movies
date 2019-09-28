@@ -25,8 +25,8 @@ const Pagination = props => {
   const nextPage = +props.currentPage + 1;
   const prevPage = +props.currentPage - 1;
   const { url } = props.match;
-  const parsedSearch = queryString.parse(props.location.search);
   let pagination;
+  const parsedSearch = queryString.parse(props.location.search);
   const clientWidth = document.documentElement.clientWidth > 500;
   if (!clientWidth) {
     pagination = (

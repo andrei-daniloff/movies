@@ -65,8 +65,8 @@ const Wrapper = styled.div`
   }
 `;
 
-const Spinner = () => {
-  return <Wrapper>Loading...</Wrapper>;
+const Spinner = ({ suspense = null }) => {
+  return <Wrapper suspense={suspense}>Loading...</Wrapper>;
 };
 
 export default Spinner;

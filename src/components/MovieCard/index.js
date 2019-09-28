@@ -5,8 +5,9 @@ import rocket from '../../images/rocket.svg';
 
 const Img = styled.img`
   width: 100%;
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 5px;
   height: 25rem;
+  box-shadow: 0 0px 10px #a2a2a2;
   opacity: ${props => props.loading ? '0' : '1'};
 `;
 
@@ -19,7 +20,6 @@ const Title = styled.h2`
 
 const Wrapper = styled.div`
   margin: 10px 0;
-  box-shadow: 0 0px 10px #a2a2a2;
   display: flex;
   flex-direction: column;
   border-radius: 5px;

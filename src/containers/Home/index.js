@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 // import PropTypes from 'prop-types';
 import axios from 'axios';
 // import styled from 'styled-components';
-import MovieCard from '../../components/MovieCard';
+// import MovieCard from '../../components/MovieCard';
 import {withRouter} from 'react-router-dom';
 import queryString from 'query-string'
-import Pagination from '../../components/UI/Pagination';
+// import Pagination from '../../components/UI/Pagination';
 import { animateScroll as scroll } from "react-scroll";
 import Spinner from '../../components/UI/Spinner';
 
+const MovieCard = lazy(()=> import('../../components/MovieCard'))
+
+const Pagination = lazy(()=> import('../../components/UI/Pagination'))
  
 class Home extends Component {
   state = {
@@ -57,20 +60,21 @@ class Home extends Component {
   render() {
     const {movies, currentPage,loading} = this.state;
      let list;
-     if (loading ){
+     if (loading){
       list = <Spinner/>
     } else {
-      list = 
-      <>
-        {movies.map(movie => (
-        <MovieCard
-          imageURL={movie.poster_path}
-          title={movie.original_title}
-          id={movie.id}
-        />
-        ))}
-        <Pagination currentPage={currentPage}/>
-      </>
+      list =        
+        <Suspense fallback={<Spinner />}>
+          {movies.map(movie => (
+          <MovieCard
+            imageURL={movie.poster_path}
+            title={movie.original_title}
+            id={movie.id}
+          />
+          ))}
+          <Pagination currentPage={currentPage}/>
+        </Suspense>       
+      
     }
     return (
       <div className="row"> 
