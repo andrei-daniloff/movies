@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   transform: translateX(-100vw);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease 0s;
   margin-left: -8px;
   z-index: 100;
   @media (max-width: 575px) {

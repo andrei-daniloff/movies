@@ -29,7 +29,8 @@ const Pagination = ({ totalPages, currentPage, location, match }) => {
   const parsedSearch = queryString.parse(location.search);
   const id = parsedSearch.id ? `&id=${parsedSearch.id}` : '';
   const clientWidth = document.documentElement.clientWidth > 500;
-  if (!clientWidth) {
+
+  if (!clientWidth && totalPages > 1) {
     pagination = (
       <>
         {prevPage === 0 ? null : <Link to={`${url}?page=${prevPage}${id}`}>{prevPage}</Link>}
@@ -39,8 +40,7 @@ const Pagination = ({ totalPages, currentPage, location, match }) => {
         <Link to={`${url}?page=${nextPage}${id}`}>{nextPage}</Link>
       </>
     );
-  }
-  if (prevPage === 0 && clientWidth) {
+  } else if (prevPage === 0 && clientWidth && totalPages > 1) {
     pagination = (
       <>
         <Link to={`${url}?page=1${id}`}>Start</Link>
@@ -51,7 +51,7 @@ const Pagination = ({ totalPages, currentPage, location, match }) => {
         <Link to={`${url}?page=${totalPages}${id}`}>End</Link>
       </>
     );
-  } else if (nextPage > totalPages && clientWidth) {
+  } else if (nextPage > totalPages && clientWidth && totalPages > 1) {
     pagination = (
       <>
         <Link to={`${url}?page=1${id}`}>Start</Link>
@@ -61,7 +61,7 @@ const Pagination = ({ totalPages, currentPage, location, match }) => {
         </Link>
       </>
     );
-  } else if (prevPage !== 0 && clientWidth) {
+  } else if (prevPage !== 0 && clientWidth && totalPages > 1) {
     pagination = (
       <>
         <Link to={`${url}?page=1${id}`}>Start</Link>
