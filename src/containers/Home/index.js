@@ -49,7 +49,7 @@ class Home extends Component {
       () => this.fetchMovies(parsedSearch.id))
     } 
 
-    if (search && (genre !== params.request)){
+    if ((search && (genre !== params.request)) || (search && (prevParsedSearch.page !== parsedSearch.page))){
       this.fetchMovies()
     }
 
@@ -83,8 +83,8 @@ class Home extends Component {
         .catch(err => console.log(err)); 
     } else if ( search ) {
        axios
-      .get(`https://api.themoviedb.org/3/search/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&query=${params.request}&page=1`)
-        .then(res => this.setState({genre: params.request, loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
+      .get(`https://api.themoviedb.org/3/search/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&query=${params.request}&page=${parsedSearch.page}`)
+        .then(res => this.setState({currentPage: parsedSearch.page, genre: params.request, loading: false, movies: res.data.results, totalPages: res.data.total_pages}, ()=>console.log(this.state)))
         .catch(err => console.log(err)); 
     }
   }
