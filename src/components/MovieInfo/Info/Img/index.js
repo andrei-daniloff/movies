@@ -3,7 +3,6 @@ import styled, {css} from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import rocket from '../../../../images/rocket.svg';
 
-
 const IMAGE_API = 'https://image.tmdb.org/t/p/w342';
 
 const Img = styled.img`
@@ -21,7 +20,7 @@ const Img = styled.img`
     height: 25rem;
   `}
 `;
-
+ 
 class ImgLoader extends Component {
   state = {
     loading: true
@@ -36,22 +35,22 @@ class ImgLoader extends Component {
     const { loadMoreInfo } = this;
     const { loading } = this.state;
 
-    return (
-      <Img
-        actors={actors}
-        infoCard={infoCard}
-        onClick={preview ? () => loadMoreInfo(id) : null}
-        loading={loading}
-        src={`${IMAGE_API}${imageURL}`}
-        onLoad={() => this.setState({ loading: false })}
-        alt="poster"
-        onError={e => {
-          this.setState({ loading: false });
-          if (e.target.src !== rocket) {
-            e.target.src = rocket;
-          }
-        }}
-      />
+    return (     
+        <Img
+          actors={actors}
+          infoCard={infoCard}
+          onClick={preview ? () => loadMoreInfo(id) : null}
+          loading={loading}
+          src={`${IMAGE_API}${imageURL}`}
+          onLoad={() => this.setState({ loading: false })}
+          alt="poster"
+          onError={e => {
+            this.setState({ loading: false });
+            if (e.target.src !== rocket) {
+              e.target.src = rocket;
+            }
+          }}
+        /> 
     );
   }
 }

@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   height: 100%;
   color: #fff;
   ${props =>
-    props.home &&
+    props.center &&
     css`
       color: #000;
       margin: auto;
@@ -19,9 +19,9 @@ const Text = styled.p`
   text-align: center;
 `;
 
-const ErrorHandler = ({ home = false, children }) => {
+const ErrorHandler = ({ center = false, children }) => {
   return (
-    <Wrapper home={home}>
+    <Wrapper center={center}>
       <Text>{children}</Text>
     </Wrapper>
   );

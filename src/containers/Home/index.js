@@ -68,16 +68,14 @@ class Home extends Component {
     const genreLower = genre.toLowerCase();
     scroll.scrollToTop(); 
     if (!parsedSearch.id && !search) {
-      console.log("1")
-      axios
+       axios
       .get(
         `https://api.themoviedb.org/3/movie/${genreLower}?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&page=${currentPage}`
         )
         .then(res => this.setState({error: null, loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
         .catch(err => this.setState({loading: false, error: err.response.data.status_message})); 
     } else if (parsedSearch.id && !search) {
-      console.log("2")
-       axios
+        axios
       .get(
 `https://api.themoviedb.org/3/discover/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&sort_by=popularity.desc&with_genres=${parsedSearch.id}&include_video=false&page=${currentPage}`)
         .then(res => this.setState({error: null, loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
@@ -102,10 +100,9 @@ class Home extends Component {
     if (loading){
       list = <Spinner/>
     } else if (error) {
-      list = <Error home>{error}</Error>
+      list = <Error center>{error}</Error>
     } else {
-      console.log(this.state,' empty')
-      const title = genre.split('_').join(' ')
+       const title = genre.split('_').join(' ')
       list =        
         <Suspense fallback={<Spinner />}>
         <div className="col-lg-12">

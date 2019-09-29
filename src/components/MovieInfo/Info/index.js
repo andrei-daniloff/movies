@@ -4,6 +4,8 @@ import axios from 'axios';
 import ImgLoader from './Img';
 import Details from './Details';
 import styled from 'styled-components';
+import Spinner from '../../UI/Spinner';
+import Error from '../../Error'
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,11 +19,12 @@ class Info extends Component {
     poster: null,
     duration: null,
     release_date: null,
-    rate: null
+    rate: null,
+    error: null,
+    loading: true
    }
   componentDidMount() {
     const { id } = this.props.match.params;
-    console.log(id);
     axios
       .get(
         `https://api.themoviedb.org/3/movie/${id}?api_key=8c7720742602f6274d23061fa907cb34&language=en-US`
@@ -33,15 +36,23 @@ class Info extends Component {
         poster: data.poster_path,
         duration: data.runtime,
         release_date: data.release_date,
-        rate: data.vote_average
+        rate: data.vote_average,
+        error: null,
+        loading: false
       }))
-      .catch(err => console.log(err));
+      .catch(err => this.setState({error: err.response.data.status_message,
+        loading: false}));
   }
 
   render() {
-    const { poster } = this.state;    
-    return (
-      <>
+    const { poster, loading, error } = this.state; 
+    let info;
+    if (loading){
+      info = <Spinner />
+    } else if (error){
+      info = <Error center>{error}</Error>
+    } else {
+      info = <>
         <div className="col-lg-4">
         <Wrapper>
           <ImgLoader imageURL={poster} infoCard/>
@@ -51,7 +62,8 @@ class Info extends Component {
           <Details {...this.state}/>
         </div>
       </>
-    );
+    } 
+    return info;
   }
 }
 

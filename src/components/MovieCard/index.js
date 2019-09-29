@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImgLoader from '../MovieInfo/Info/Img';
-import { animateScroll as scroll } from 'react-scroll';
 
 const Title = styled.h2`
   font-size: 1rem;
@@ -19,10 +18,6 @@ const Wrapper = styled.div`
 `;
 
 class MovieCard extends Component {
-  componentDidMount() {
-    scroll.scrollToTop();
-  }
-
   render() {
     const { imageURL, id, title } = this.props;
     return (

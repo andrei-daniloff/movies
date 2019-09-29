@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import BurgerButton from '../../UI/BurgerButton';
 import Error from '../../Error';
+import Spinner from '../../UI/Spinner';
 
 const Wrapper = styled.div`
   overflow: auto scroll;
@@ -61,7 +62,7 @@ const DisplayFlex = styled.div`
 const SideDrawn = ({ list, openMenu, onOpenMenu, error }) => {
   let genres;
   if (!list) {
-    genres = <h1>Loading</h1>;
+    genres = <Spinner />;
   } else {
     genres = list.map(genre => (
       <Link

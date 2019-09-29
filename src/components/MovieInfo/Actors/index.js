@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Spinner from '../../UI/Spinner';
 import ImgLoader from '../Info/Img';
 import Pagination from './Pagination';
+import Error from '../../Error';
 
 const Role = styled.p`
   text-align: center;
@@ -30,17 +31,17 @@ class Actors extends Component {
     actors: [],
     loading: true,
     currentPage: 1,
-    totalPage: null     
+    totalPage: null,
+    error: null     
   }
   componentDidMount() {
     const { id } = this.props.match.params;
     axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=8c7720742602f6274d23061fa907cb34`)
          .then(res => {
           const totalPage = Math.ceil(res.data.cast.length / 8);
-          console.log(totalPage,'total')
-          this.setState({actors: res.data.cast, loading: false, totalPage})
+          this.setState({actors: res.data.cast, loading: false, totalPage, error: null})
           })
-         .catch(err => console.log(err))
+         .catch(err => this.setState({error: err.response.data.status_message, loading: false}))
   }
 
   changePage = (type) => {
@@ -55,12 +56,17 @@ class Actors extends Component {
   }
 
   render() {
-    const {actors, loading, currentPage, totalPage} = this.state;
-    console.log(currentPage,"CUr")
-    const { changePage } = this; 
-    let list;
+    const {actors, loading, currentPage, totalPage, error} = this.state;
+     const { changePage } = this; 
+    let list = [];
     if (loading){
-      list = <Spinner/>
+      list = (
+      <div className="col-lg-12">
+        <Spinner/>
+      </div>
+      )        
+    } else if (error) { 
+      list = <Error center>{error}</Error>       
     } else {
       const begin = currentPage * 8 - 8;
       const end = currentPage * 8;
@@ -79,16 +85,21 @@ class Actors extends Component {
         </div>
       )
         ) 
+
     }
     return( 
         <>
-          <div className="col-lg-12">
-            <Title>Actors</Title>
-          </div>
-          {list}
-          <div className="col-lg-12">
-            <Pagination totalPage={totalPage} currentPage={currentPage} changePage={changePage}/>
-          </div>
+          {list.length > 1 ? 
+          <>
+            <div className="col-lg-12">
+              <Title>Actors</Title>
+            </div>
+            {list}
+            <div className="col-lg-12">
+              <Pagination totalPage={totalPage} currentPage={currentPage} changePage={changePage}/>
+            </div>
+          </> : null
+          }
         </>
     )
   }
