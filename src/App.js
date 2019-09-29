@@ -11,13 +11,14 @@ const Movie = lazy(() => import('./containers/MovieInfo'));
 class App extends Component {
   state = {
     listGenres: null,
-    openMenu: false
+    openMenu: false,
+    error: null
   }
 
   componentDidMount() {
     axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=8c7720742602f6274d23061fa907cb34&language=en-US')
-    .then(res => this.setState({listGenres:res.data.genres}))
-    .catch(err => console.log(err))
+    .then(res => this.setState({listGenres: res.data.genres}))
+    .catch(err => this.setState({error: err.response.data.status_message}))
   }
 
   onOpenMenu = () => {
@@ -25,12 +26,12 @@ class App extends Component {
   }
   
   render() {
-    const {listGenres, openMenu} = this.state;
+    const {listGenres, openMenu, error} = this.state;
     const {onOpenMenu} = this;
     return (
       <div className="container">
       <Suspense fallback={<Spinner/>}>
-        <Menu list={listGenres} onOpenMenu={onOpenMenu} openMenu={openMenu}/> 
+        <Menu error={error} list={listGenres} onOpenMenu={onOpenMenu} openMenu={openMenu}/> 
         <Switch>
           <Route path="/" exact render={() => <Redirect from="/" to="/discover/Popular/?page=1" />} />
           <Route path="/discover/:genre" component={Home} />

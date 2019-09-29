@@ -3,6 +3,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import BurgerButton from '../../UI/BurgerButton';
+import Error from '../../Error';
 
 const Wrapper = styled.div`
   overflow: auto scroll;
@@ -57,7 +58,7 @@ const DisplayFlex = styled.div`
   flex-direction: column;
 `;
 
-const SideDrawn = ({ list, openMenu, onOpenMenu }) => {
+const SideDrawn = ({ list, openMenu, onOpenMenu, error }) => {
   let genres;
   if (!list) {
     genres = <h1>Loading</h1>;
@@ -79,14 +80,20 @@ const SideDrawn = ({ list, openMenu, onOpenMenu }) => {
       <WrapperBurgerButton>
         <BurgerButton func={onOpenMenu} menu />
       </WrapperBurgerButton>
-      <GenresTitle>Discover</GenresTitle>
-      <DisplayFlex onClick={onOpenMenu}>
-        <Link to="/discover/Popular/?page=1">Popular</Link>
-        <Link to="/discover/Upcoming/?page=1">Upcoming</Link>
-        <Link to="/discover/Top_rated/?page=1">Top Rated</Link>
-      </DisplayFlex>
-      <GenresTitle>Genres</GenresTitle>
-      <DisplayFlex onClick={onOpenMenu}>{genres}</DisplayFlex>
+      {error ? (
+        <Error>{error}</Error>
+      ) : (
+        <>
+          <GenresTitle>Discover</GenresTitle>
+          <DisplayFlex onClick={onOpenMenu}>
+            <Link to="/discover/Popular/?page=1">Popular</Link>
+            <Link to="/discover/Upcoming/?page=1">Upcoming</Link>
+            <Link to="/discover/Top_rated/?page=1">Top Rated</Link>
+          </DisplayFlex>
+          <GenresTitle>Genres</GenresTitle>
+          <DisplayFlex onClick={onOpenMenu}>{genres}</DisplayFlex>
+        </>
+      )}
     </Wrapper>
   );
 };

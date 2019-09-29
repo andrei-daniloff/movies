@@ -13,11 +13,11 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Menu = ({ list, openMenu, onOpenMenu }) => {
+const Menu = ({ list, openMenu, onOpenMenu, error }) => {
   return (
     <div className="row">
       <div className="col-lg-12">
-        <SideDrawn list={list} openMenu={openMenu} onOpenMenu={onOpenMenu} />
+        <SideDrawn error={error} list={list} openMenu={openMenu} onOpenMenu={onOpenMenu} />
         <Wrapper>
           <BurgerButton func={onOpenMenu} />
           <Search />

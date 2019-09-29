@@ -9,6 +9,7 @@ import queryString from 'query-string'
 import styled from 'styled-components';
 import { animateScroll as scroll } from "react-scroll";
 import Spinner from '../../components/UI/Spinner';
+import Error from '../../components/Error'
 
 const MovieCard = lazy(()=> import('../../components/MovieCard'));
 
@@ -27,6 +28,7 @@ class Home extends Component {
     currentPage: 1,
     loading: true,
     totalPages: null,
+    error: null
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -36,9 +38,6 @@ class Home extends Component {
     const { params, path } = this.props.match;
     const search = /search/.test(path);
     const page = parseInt(parsedSearch.page);
-    console.log(prevProps,"prevProps", this.props, 'this props', parsedSearch, 'parsed')
-        console.log(this.state,"state" )
-
     if (((genre !== params.genre || parsedSearch.page !== currentPage) && !parsedSearch.id) && !search ){
       this.setState({loading: true, genre: this.props.match.params.genre, currentPage: parsedSearch.page},
       () => this.fetchMovies())
@@ -66,36 +65,46 @@ class Home extends Component {
     const { params, path } = this.props.match;
     const search = /search/.test(path);
     const parsedSearch = queryString.parse(this.props.location.search);
+    const genreLower = genre.toLowerCase();
     scroll.scrollToTop(); 
     if (!parsedSearch.id && !search) {
       console.log("1")
       axios
       .get(
-        `https://api.themoviedb.org/3/movie/${genre.toLowerCase()}?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&page=${currentPage}`
+        `https://api.themoviedb.org/3/movie/${genreLower}?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&page=${currentPage}`
         )
-        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
-        .catch(err => console.log(err)); 
+        .then(res => this.setState({error: null, loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
+        .catch(err => this.setState({loading: false, error: err.response.data.status_message})); 
     } else if (parsedSearch.id && !search) {
       console.log("2")
        axios
       .get(
 `https://api.themoviedb.org/3/discover/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&sort_by=popularity.desc&with_genres=${parsedSearch.id}&include_video=false&page=${currentPage}`)
-        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
-        .catch(err => console.log(err)); 
+        .then(res => this.setState({error: null, loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
+        .catch(err => this.setState({loading: false, error: err.response.data.status_message})); 
     } else if ( search ) {
        axios
       .get(`https://api.themoviedb.org/3/search/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&query=${params.request}&page=${parsedSearch.page}`)
-        .then(res => this.setState({loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
-        .catch(err => console.log(err)); 
+        .then(res => {
+          if (res.data.results.length === 0){
+             this.setState({error: "The movie not found", loading: false})
+          } else {
+            this.setState({error: null, loading: false, movies: res.data.results, totalPages: res.data.total_pages})
+          }
+        })
+        .catch(err => this.setState({loading: false, error: err.response.data.status_message})); 
     }
   }
 
   render() {
-    const {movies, currentPage, loading, totalPages, genre } = this.state;
+    const {movies, currentPage, loading, totalPages, genre, error } = this.state;
     let list;
     if (loading){
       list = <Spinner/>
+    } else if (error) {
+      list = <Error home>{error}</Error>
     } else {
+      console.log(this.state,' empty')
       const title = genre.split('_').join(' ')
       list =        
         <Suspense fallback={<Spinner />}>
