@@ -16,9 +16,35 @@ const Img = styled.img`
   &:hover {
     transform: ${props => props.infoCard ? 'scale(1)' : 'scale(1.02)'}; 
   }
+  ${props => props.infoCard && css`
+    @media (max-width: 767px){
+      height: 20rem;
+    }
+    @media (max-width: 575px){
+    height: 22rem;
+    }
+    @media (max-width: 450px){
+      height: 17rem;
+    }
+  `}
   ${props => props.actors && css`
     height: 25rem;
+    @media (max-width: 991px){
+      height: 20rem;
+    }
+    @media (max-width: 575px){
+      height: 22rem;
+    }
+    @media (max-width: 450px){
+      height: 17rem;
+    }
   `}
+  @media (max-width: 575px){
+    height: 20rem;
+  }
+  @media (max-width: 450px){
+    height: 17rem;
+  }
 `;
  
 class ImgLoader extends Component {

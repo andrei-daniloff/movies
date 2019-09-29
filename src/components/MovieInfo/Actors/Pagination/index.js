@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,6 +13,18 @@ const Wrapper = styled.div`
     margin: 0px 20px;
     border: 2px dashed #5fb8ff;
     border-radius: 10px;
+  }
+  .pagination{
+    padding: 10px;
+  background-color: transparent;
+  border: 2px solid #5fb8ff;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+  transform: scale(1);
+  &:active {
+    transform: scale(0.9);
+  }
   }
 `;
 
@@ -30,9 +44,9 @@ const Button = styled.button`
 const Pagination = ({ currentPage, changePage, totalPage }) => {
   return (
     <Wrapper>
-      {currentPage === 1 ? null : <Button onClick={() => changePage('prev')}>Prev</Button>}
+      {currentPage === 1 ? null : <Link className="pagination" to="actors" spy={true} smooth={true} duration={500} onClick={() => changePage('prev')}>Prev</Link>}
       <span>{currentPage}</span>
-      {currentPage === totalPage ? null : <Button onClick={() => changePage('next')}>Next</Button>}
+      {currentPage === totalPage ? null : <Link className="pagination" to="actors" spy={true} smooth={true} duration={500} onClick={() => changePage('next')}>Next</Link>}
     </Wrapper>
   );
 };

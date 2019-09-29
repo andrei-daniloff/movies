@@ -21,7 +21,7 @@ class MovieCard extends Component {
   render() {
     const { imageURL, id, title } = this.props;
     return (
-      <div className="col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-6 col-md-offset-0 col-md-4 col-lg-3">
+      <div className="col-xs-offset-3 col-xs-6 col-sm-offset-0 col-sm-6 col-md-offset-0 col-md-4 col-lg-offset-0 col-lg-3">
         <Wrapper>
           <ImgLoader imageURL={imageURL} preview id={id} />
           <Title>{title}</Title>

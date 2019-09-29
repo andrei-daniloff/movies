@@ -30,6 +30,7 @@ const Overview = styled.p``;
 const Links = styled.div`
   margin-top: 10px;
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const StyledLink = styled(Link)`
@@ -41,6 +42,7 @@ const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
   &:hover {
     border: 1px dashed #ccc;
   }
@@ -50,7 +52,8 @@ const StyledLink = styled(Link)`
     transform: scale(0.9);
   }
   &:nth-child(2n) {
-    margin: 0 10px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
   &:visited {
     color: black;

@@ -18,6 +18,9 @@ const Pagination = lazy(()=> import('../../components/UI/Pagination'));
 const Title = styled.h1`
   margin-top: 0px;
   line-height: 2rem;
+  @media (max-width: 575px){
+    text-align: center
+  }
 `
 
 class Home extends Component {

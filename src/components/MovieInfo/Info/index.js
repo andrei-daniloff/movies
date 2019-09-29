@@ -53,7 +53,7 @@ class Info extends Component {
       info = <Error center>{error}</Error>
     } else {
       info = <>
-        <div className="col-lg-4">
+        <div className="col-xs-offset-3 col-xs-6 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-0 col-lg-4">
         <Wrapper>
           <ImgLoader imageURL={poster} infoCard/>
         </Wrapper>

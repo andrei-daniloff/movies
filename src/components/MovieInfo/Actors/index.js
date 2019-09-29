@@ -6,6 +6,7 @@ import Spinner from '../../UI/Spinner';
 import ImgLoader from '../Info/Img';
 import Pagination from './Pagination';
 import Error from '../../Error';
+import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const Role = styled.p`
   text-align: center;
@@ -72,7 +73,7 @@ class Actors extends Component {
       const end = currentPage * 8;
       const sliceArr = actors.slice(begin, end);  
       list = sliceArr.map(actor => (
-        <div className="col-lg-3">
+        <div className="col-xs-offset-3 col-xs-6 col-sm-offset-0 col-sm-6 col-md-3 col-lg-3">
         <Wrapper>
           <ImgLoader imageURL={actor.profile_path} actors infoCard/>
           <Name>
@@ -89,10 +90,12 @@ class Actors extends Component {
     }
     return( 
         <>
-          {list.length > 1 ? 
+          {list.length >= 1 ? 
           <>
             <div className="col-lg-12">
+            <Element name="actors" className="actors">
               <Title>Actors</Title>
+            </Element>
             </div>
             {list}
             <div className="col-lg-12">

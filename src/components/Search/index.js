@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import search from '../../images/search.svg'
 
 const Input = styled.input`
   font-size: 14px;
@@ -10,8 +11,7 @@ const Input = styled.input`
   margin-left: ${props => (props.barOpened ? "1rem" : "0rem")};
   border: none;
   color: white;
-  transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
-
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   &:focus,
   &:active {
     outline: none;
@@ -22,20 +22,17 @@ const Input = styled.input`
 `
 
 const Form = styled.form`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #37474f;
-  /* Change width of the form depending if the bar is opened or not */
-  width: ${props => (props.barOpened ? "30rem" : "2rem")};
-  /* If bar opened, normal cursor on the whole form. If closed, show pointer on the whole form so user knows he can click to open it */
+  width: ${props => (props.barOpened ? "15rem" : "1.2rem")};
   cursor: ${props => (props.barOpened ? "auto" : "pointer")};
-  padding: 2rem;
-  height: 2rem;
+  padding: ${props => (props.barOpened ? "1.2rem 1.2rem 1.2rem 0.6rem" : "1.2rem")};
+  height: 1.2rem;
   border-radius: 10rem;
-  transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 `
 
 const Button = styled.button`
@@ -97,6 +94,8 @@ class Seacrh extends Component {
         pathname: `/search/${copy}`,
         search: '?page=1'
       }))
+    } else {
+      this.setBarClose()
     }
   }
 
@@ -104,7 +103,6 @@ class Seacrh extends Component {
     const { onChangeReq, onFormSubmit, setBarOpened } = this;
     const { request, barOpened } = this.state;
     return (
-      <div className="App">
       <Form
         barOpened={barOpened}
         onClick={() => {
@@ -115,7 +113,7 @@ class Seacrh extends Component {
         ref={this.formRef}
       >
         <Button type="submit" barOpened={barOpened}>
-          icon
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" style={{width: '14px'}}  class="svg-inline--fa fa-search fa-w-16 fa-1x " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg>
         </Button>
         <Input
           onChange={e => onChangeReq(e.target.value)}
@@ -125,7 +123,7 @@ class Seacrh extends Component {
           placeholder="Search for a movie..."
         />
       </Form>
-    </div>
+
     );
   }
 }
