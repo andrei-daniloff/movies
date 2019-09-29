@@ -37,6 +37,10 @@ const StyledLink = styled(Link)`
   padding: 8px 16px;
   border: 1px solid #ccc;
   border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     border: 1px dashed #ccc;
   }
