@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Link = styled(NavLink)`
   padding: 10px 30px;
@@ -80,6 +81,14 @@ const Pagination = ({ totalPages, currentPage, location, match }) => {
       <Wrapper>{pagination}</Wrapper>
     </div>
   );
+};
+
+Pagination.propTypes = {
+  totalPages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  url: PropTypes.string.isRequired
 };
 
 export default withRouter(Pagination);

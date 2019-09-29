@@ -60,7 +60,6 @@ class ImgLoader extends Component {
     const { imageURL, preview, id, infoCard, actors} = this.props;
     const { loadMoreInfo } = this;
     const { loading } = this.state;
-
     return (     
         <Img
           actors={actors}

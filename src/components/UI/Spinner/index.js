@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
   font-size: 10px;
@@ -67,6 +68,10 @@ const Wrapper = styled.div`
 
 const Spinner = ({ suspense = null }) => {
   return <Wrapper suspense={suspense}>Loading...</Wrapper>;
+};
+
+Spinner.propTypes = {
+  suspense: PropTypes.bool
 };
 
 export default Spinner;

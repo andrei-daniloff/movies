@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import search from '../../images/search.svg'
 
@@ -20,7 +20,6 @@ const Input = styled.input`
     color: white;
   }
 `
-
 const Form = styled.form`
   display: flex;
   align-items: center;
@@ -34,7 +33,6 @@ const Form = styled.form`
   border-radius: 10rem;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 `
-
 const Button = styled.button`
   line-height: 1;
   pointer-events: ${props => (props.barOpened ? "auto" : "none")};
@@ -43,8 +41,7 @@ const Button = styled.button`
   border: none;
   outline: none;
   color: white;
-`
- 
+` 
 
 class Seacrh extends Component {
   constructor(props){
@@ -67,7 +64,6 @@ class Seacrh extends Component {
   
   handleClick = (e) => {
     if (this.formRef.current.contains(e.target)) {
-      // click was inside form, do nothing
       return;
     }
     this.setBarClose()

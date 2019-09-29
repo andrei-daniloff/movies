@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import BurgerButton from '../UI/BurgerButton';
 import SideDrawn from './SideDrawn';
@@ -27,6 +27,11 @@ const Menu = ({ list, openMenu, onOpenMenu, error }) => {
   );
 };
 
-// Menu.propTypes = {};
+Menu.propTypes = {
+  list: PropTypes.array,
+  openMenu: PropTypes.bool.isRequired,
+  onOpenMenu: PropTypes.func.isRequired,
+  error: PropTypes.string
+};
 
 export default Menu;

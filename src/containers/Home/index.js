@@ -1,19 +1,16 @@
 import React, { Component, lazy, Suspense } from 'react';
-// import PropTypes from 'prop-types';
 import axios from 'axios';
-// import styled from 'styled-components';
-// import MovieCard from '../../components/MovieCard';
-import {withRouter} from 'react-router-dom';
-import queryString from 'query-string'
-// import Pagination from '../../components/UI/Pagination';
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 import styled from 'styled-components';
 import { animateScroll as scroll } from "react-scroll";
 import Spinner from '../../components/UI/Spinner';
-import Error from '../../components/Error'
+import Error from '../../components/Error';
 
-const MovieCard = lazy(()=> import('../../components/MovieCard'));
-
-const Pagination = lazy(()=> import('../../components/UI/Pagination'));
+const MovieCard = lazy(() => import('../../components/MovieCard'));
+const Pagination = lazy(() => import('../../components/UI/Pagination'));
+const API = 'https://api.themoviedb.org/3';
+const KEY = 'api_key=8c7720742602f6274d23061fa907cb34'; 
  
 const Title = styled.h1`
   margin-top: 0px;
@@ -55,14 +52,13 @@ class Home extends Component {
       this.setState({loading: true, genre: this.props.match.params.request, currentPage: parsedSearch.page},
       () => this.fetchMovies())
     }
-
   }  
 
   componentDidMount() {     
      this.fetchMovies();            
   }  
 
-  fetchMovies = (id = null,) => {
+  fetchMovies = (id = null) => {
     const { genre, currentPage, loading ,searchPage } = this.state;
     const { request } = this.props.match.params;
     const { params, path } = this.props.match;
@@ -71,21 +67,21 @@ class Home extends Component {
     const genreLower = genre.toLowerCase();
     scroll.scrollToTop(); 
     if (!parsedSearch.id && !search) {
-       axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${genreLower}?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&page=${currentPage}`
+       axios.get(
+        `${API}/movie/${genreLower}?${KEY}&language=en-US&page=${currentPage}`
         )
         .then(res => this.setState({error: null, loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
         .catch(err => this.setState({loading: false, error: err.response.data.status_message})); 
     } else if (parsedSearch.id && !search) {
-        axios
-      .get(
-`https://api.themoviedb.org/3/discover/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&sort_by=popularity.desc&with_genres=${parsedSearch.id}&include_video=false&page=${currentPage}`)
+        axios.get(
+        `${API}/discover/movie?${KEY}&language=en-US&sort_by=popularity.desc&with_genres=${parsedSearch.id}&include_video=false&page=${currentPage}`
+        )
         .then(res => this.setState({error: null, loading: false, movies: res.data.results, totalPages: res.data.total_pages}))
         .catch(err => this.setState({loading: false, error: err.response.data.status_message})); 
     } else if ( search ) {
-       axios
-      .get(`https://api.themoviedb.org/3/search/movie?api_key=8c7720742602f6274d23061fa907cb34&language=en-US&query=${params.request}&page=${parsedSearch.page}`)
+       axios.get(
+        `${API}/search/movie?${KEY}&language=en-US&query=${params.request}&page=${parsedSearch.page}`
+        )
         .then(res => {
           if (res.data.results.length === 0){
              this.setState({error: "The movie not found", loading: false})
@@ -98,19 +94,19 @@ class Home extends Component {
   }
 
   render() {
-    const {movies, currentPage, loading, totalPages, genre, error } = this.state;
+    const { movies, currentPage, loading, totalPages, genre, error } = this.state;
     let list;
     if (loading){
       list = <Spinner/>
     } else if (error) {
       list = <Error center>{error}</Error>
     } else {
-       const title = genre.split('_').join(' ')
+       const title = genre.split('_').join(' ');
       list =        
         <Suspense fallback={<Spinner />}>
-        <div className="col-lg-12">
-          <Title>{title}</Title>
-        </div>
+          <div className="col-lg-12">
+            <Title>{title}</Title>
+          </div>
           {movies.map(movie => (
           <MovieCard
             imageURL={movie.poster_path}
@@ -128,7 +124,5 @@ class Home extends Component {
     )
   }
 }
-
-// Home.propTypes = {};
 
 export default withRouter(Home);

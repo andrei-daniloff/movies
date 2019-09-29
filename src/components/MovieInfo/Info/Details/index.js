@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import star from '../../../../images/star.png';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import star from '../../../../images/star.png';
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const Rate = styled.span`
     width: 1rem;
   }
 `;
+
 const Duration = styled.span``;
 
 const Overview = styled.p``;
@@ -91,6 +93,15 @@ const Details = ({ title, genres, overview, duration, release_date, rate }) => {
       <Links>{genresLinks}</Links>
     </Wrapper>
   );
+};
+
+Details.propTypes = {
+  title: PropTypes.string.isRequired,
+  genres: PropTypes.string.isRequired,
+  overview: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
+  release_date: PropTypes.string.isRequired,
+  rate: PropTypes.number.isRequired
 };
 
 export default Details;

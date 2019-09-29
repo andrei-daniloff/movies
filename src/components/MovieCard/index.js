@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImgLoader from '../MovieInfo/Info/Img';
 
@@ -30,5 +30,11 @@ class MovieCard extends Component {
     );
   }
 }
+
+MovieCard.propTypes = {
+  imageURL: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired
+};
 
 export default MovieCard;

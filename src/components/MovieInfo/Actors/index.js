@@ -6,7 +6,7 @@ import Spinner from '../../UI/Spinner';
 import ImgLoader from '../Info/Img';
 import Pagination from './Pagination';
 import Error from '../../Error';
-import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import {  Element } from 'react-scroll'
 
 const Role = styled.p`
   text-align: center;
@@ -39,8 +39,8 @@ class Actors extends Component {
     const { id } = this.props.match.params;
     axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=8c7720742602f6274d23061fa907cb34`)
          .then(res => {
-          const totalPage = Math.ceil(res.data.cast.length / 8);
-          this.setState({actors: res.data.cast, loading: false, totalPage, error: null})
+            const totalPage = Math.ceil(res.data.cast.length / 8);
+            this.setState({actors: res.data.cast, loading: false, totalPage, error: null})
           })
          .catch(err => this.setState({error: err.response.data.status_message, loading: false}))
   }
@@ -58,7 +58,7 @@ class Actors extends Component {
 
   render() {
     const {actors, loading, currentPage, totalPage, error} = this.state;
-     const { changePage } = this; 
+    const { changePage } = this; 
     let list = [];
     if (loading){
       list = (

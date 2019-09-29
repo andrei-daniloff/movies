@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div`
@@ -25,6 +26,11 @@ const ErrorHandler = ({ center = false, children }) => {
       <Text>{children}</Text>
     </Wrapper>
   );
+};
+
+ErrorHandler.propTypes = {
+  center: PropTypes.bool.isRequired,
+  children: PropTypes.string.isRequired
 };
 
 export default ErrorHandler;
