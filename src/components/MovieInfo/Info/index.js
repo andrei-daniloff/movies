@@ -9,7 +9,6 @@ const Wrapper = styled.div`
   display: flex;
 `
 
-
 class Info extends Component {
   state = {
     title: null,

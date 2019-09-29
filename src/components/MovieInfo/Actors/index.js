@@ -55,7 +55,7 @@ class Actors extends Component {
   }
 
   render() {
-    const {actors, loading, currentPage} = this.state;
+    const {actors, loading, currentPage, totalPage} = this.state;
     console.log(currentPage,"CUr")
     const { changePage } = this; 
     let list;
@@ -87,7 +87,7 @@ class Actors extends Component {
           </div>
           {list}
           <div className="col-lg-12">
-            <Pagination currentPage={currentPage} changePage={changePage}/>
+            <Pagination totalPage={totalPage} currentPage={currentPage} changePage={changePage}/>
           </div>
         </>
     )

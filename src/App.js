@@ -30,11 +30,12 @@ class App extends Component {
     return (
       <div className="container">
       <Suspense fallback={<Spinner/>}>
-        <Menu list={listGenres} onOpenMenu={onOpenMenu} openMenu={openMenu}/>
+        <Menu list={listGenres} onOpenMenu={onOpenMenu} openMenu={openMenu}/> 
         <Switch>
           <Route path="/" exact render={() => <Redirect from="/" to="/discover/Popular/?page=1" />} />
           <Route path="/discover/:genre" component={Home} />
           <Route path="/genres/:genre" component={Home} />
+          <Route path="/search/:request" component={Home} />
           <Route path="/movie/:id" component={Movie} />
           <Route render={()=> <h1>404</h1>}/>
         </Switch>

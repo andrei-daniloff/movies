@@ -27,12 +27,12 @@ const Button = styled.button`
   }
 `;
 
-const Pagination = ({ currentPage, changePage }) => {
+const Pagination = ({ currentPage, changePage, totalPage }) => {
   return (
     <Wrapper>
-      <Button onClick={() => changePage('prev')}>Prev</Button>
+      {currentPage === 1 ? null : <Button onClick={() => changePage('prev')}>Prev</Button>}
       <span>{currentPage}</span>
-      <Button onClick={() => changePage('next')}>Next</Button>
+      {currentPage === totalPage ? null : <Button onClick={() => changePage('next')}>Next</Button>}
     </Wrapper>
   );
 };
