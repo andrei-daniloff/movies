@@ -45,7 +45,12 @@ class Actors extends Component {
         const totalPage = Math.ceil(res.data.cast.length / 8);
         this.setState({ actors: res.data.cast, loading: false, totalPage, error: null });
       })
-      .catch(err => this.setState({ error: err.response.data.status_message, loading: false }));
+      .catch(err =>
+        this.setState({
+          error: err.response.data.status_message || 'Something went wrong!',
+          loading: false
+        })
+      );
   }
 
   changePage = type => {

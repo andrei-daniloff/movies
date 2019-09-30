@@ -94,7 +94,12 @@ class Home extends Component {
             totalPages: res.data.total_pages
           })
         )
-        .catch(err => this.setState({ loading: false, error: err.response.data.status_message }));
+        .catch(err =>
+          this.setState({
+            loading: false,
+            error: err.response.data.status_message || 'Something went wrong!'
+          })
+        );
     } else if (parsedSearch.id && !search) {
       axios
         .get(
@@ -108,7 +113,12 @@ class Home extends Component {
             totalPages: res.data.total_pages
           })
         )
-        .catch(err => this.setState({ loading: false, error: err.response.data.status_message }));
+        .catch(err =>
+          this.setState({
+            loading: false,
+            error: err.response.data.status_message || 'Something went wrong!'
+          })
+        );
     } else if (search) {
       axios
         .get(
@@ -126,7 +136,12 @@ class Home extends Component {
             });
           }
         })
-        .catch(err => this.setState({ loading: false, error: err.response.data.status_message }));
+        .catch(err =>
+          this.setState({
+            loading: false,
+            error: err.response.data.status_message || 'Something went wrong!'
+          })
+        );
     }
   };
 

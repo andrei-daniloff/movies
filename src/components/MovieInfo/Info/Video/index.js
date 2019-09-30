@@ -65,7 +65,12 @@ class Video extends Component {
         `https://api.themoviedb.org/3/movie/${this.props.id}/videos?api_key=8c7720742602f6274d23061fa907cb34&language=en-US`
       )
       .then(({ data }) => this.setState({ keyVideo: data.results[0].key, loading: false }))
-      .catch(err => this.setState({ error: err.response.data.status_message, loading: false }));
+      .catch(err =>
+        this.setState({
+          error: err.response.data.status_message || 'Something went wrong!',
+          loading: false
+        })
+      );
   }
 
   render() {

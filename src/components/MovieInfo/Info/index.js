@@ -49,7 +49,12 @@ class Info extends Component {
           loading: false
         })
       )
-      .catch(err => this.setState({ error: err.response.data.status_message, loading: false }));
+      .catch(err =>
+        this.setState({
+          error: err.response.data.status_message || 'Something went wrong!',
+          loading: false
+        })
+      );
   }
 
   onOpenModal = () => {
