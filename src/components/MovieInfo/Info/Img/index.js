@@ -14,7 +14,7 @@ const Img = styled.img`
   cursor: ${props => (props.infoCard ? 'default' : 'pointer')};
   transition: all 0.3s ease;
   &:hover {
-    transform: ${props => (props.infoCard ? 'scale(1)' : 'scale(1.02)')};
+    transform: ${props => (props.infoCard ? '' : 'scale(1.02)')};
   }
   ${props =>
     props.infoCard &&

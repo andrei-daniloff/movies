@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #fff;
+  z-index: 500;
   ${props =>
     props.show &&
     css`
