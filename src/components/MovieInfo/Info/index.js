@@ -6,6 +6,7 @@ import Details from './Details';
 import styled from 'styled-components';
 import Spinner from '../../UI/Spinner';
 import Error from '../../Error';
+import Video from './Video';
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,8 +22,13 @@ class Info extends Component {
     release_date: null,
     rate: null,
     error: null,
-    loading: true
+    loading: true,
+    videoID: '',
+    id: null,
+    key: null,
+    openModal: false
   };
+
   componentDidMount() {
     const { id } = this.props.match.params;
     axios
@@ -38,6 +44,7 @@ class Info extends Component {
           duration: data.runtime,
           release_date: data.release_date,
           rate: data.vote_average,
+          id: data.id,
           error: null,
           loading: false
         })
@@ -45,8 +52,17 @@ class Info extends Component {
       .catch(err => this.setState({ error: err.response.data.status_message, loading: false }));
   }
 
+  onOpenModal = () => {
+    this.setState({ openModal: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ openModal: false });
+  };
+
   render() {
-    const { poster, loading, error } = this.state;
+    const { poster, loading, error, openModal, id } = this.state;
+    const { onOpenModal, onCloseModal } = this;
     let info;
     if (loading) {
       info = <Spinner />;
@@ -61,8 +77,9 @@ class Info extends Component {
             </Wrapper>
           </div>
           <div className="col-lg-8">
-            <Details {...this.state} />
+            <Details onOpenModal={onOpenModal} {...this.state} />
           </div>
+          {openModal ? <Video onCloseModal={onCloseModal} id={id} /> : null}
         </>
       );
     }

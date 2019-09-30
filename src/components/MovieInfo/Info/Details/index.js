@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import star from '../../../../images/star.png';
+import play from '../../../../images/play.png';
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ const Links = styled.div`
   flex-wrap: wrap;
 `;
 
-const StyledLink = styled(Link)`
+const complexMixin = css`
   text-decoration: none;
   padding: 8px 16px;
   border: 1px solid #ccc;
@@ -45,6 +46,7 @@ const StyledLink = styled(Link)`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  margin-right: 10px;
   &:hover {
     border: 1px dashed #ccc;
   }
@@ -52,10 +54,6 @@ const StyledLink = styled(Link)`
     border: 1px dashed #ccc;
     color: black;
     transform: scale(0.9);
-  }
-  &:nth-child(2n) {
-    margin-left: 10px;
-    margin-right: 10px;
   }
   &:visited {
     color: black;
@@ -65,8 +63,28 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Details = ({ title, genres, overview, duration, release_date, rate }) => {
+const Button = styled.button`
+  ${() => complexMixin};
+  background-color: #fff;
+  outline: none;
+  cursor: pointer;
+  img {
+    margin-right: 10px;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  ${() => complexMixin}
+`;
+
+const Details = ({ title, genres, overview, duration, release_date, rate, onOpenModal }) => {
   const stars = [];
+  const video = (
+    <Button onClick={onOpenModal} type="button">
+      <img src={play} alt="play" />
+      Trailer
+    </Button>
+  );
   for (let i = 1; i <= Math.round(rate); i += 1) {
     stars.push(<img src={star} alt="star" />);
   }
@@ -90,7 +108,10 @@ const Details = ({ title, genres, overview, duration, release_date, rate }) => {
       </Release>
       <Duration>Duration: {duration} min</Duration>
       <Overview>{overview}</Overview>
-      <Links>{genresLinks}</Links>
+      <Links>
+        {genresLinks}
+        {video}
+      </Links>
     </Wrapper>
   );
 };
