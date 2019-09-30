@@ -57,35 +57,54 @@ class Video extends Component {
   state = {
     key: null,
     loading: true,
-    error: null
+    error: null,
+    hasVideo: true
   };
   componentDidMount() {
     axios
       .get(
         `https://api.themoviedb.org/3/movie/${this.props.id}/videos?api_key=8c7720742602f6274d23061fa907cb34&language=en-US`
       )
-      .then(({ data }) => this.setState({ keyVideo: data.results[0].key, loading: false }))
+      .then(({ data }) => {
+        console.log(data);
+        if (data.results.length !== 0) {
+          this.setState({ keyVideo: data.results[0].key, loading: false });
+        } else {
+          this.setState({ error: "Sorry, this movie hasn't got a trailer!", loading: false }, () =>
+            this.setupTimeout()
+          );
+        }
+      })
       .catch(err =>
         this.setState({
           error: err.response.data.status_message || 'Something went wrong!',
-          loading: false
+          loading: false,
+          hasVideo: false
         })
       );
   }
 
+  setupTimeout = () => {
+    setTimeout(() => {
+      this.setState({ error: null, hasVideo: false });
+    }, 3000);
+  };
+
   render() {
     const { onCloseModal } = this.props;
-    const { keyVideo, loading, error } = this.state;
+    const { keyVideo, loading, error, hasVideo } = this.state;
     let video;
     if (loading) {
       video = <Tooltips show={loading ? true : false}>Loading ...</Tooltips>;
     } else if (error) {
       video = <Tooltips show={error ? true : false}>{error}</Tooltips>;
-    } else {
+    } else if (hasVideo) {
       video = ReactDOM.createPortal(
         <IframeVideo keyVideo={keyVideo} onCloseModal={onCloseModal} />,
         document.getElementById('modal-root')
       );
+    } else {
+      video = null;
     }
 
     return video;
