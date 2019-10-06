@@ -66,7 +66,6 @@ class Video extends Component {
         `https://api.themoviedb.org/3/movie/${this.props.id}/videos?api_key=8c7720742602f6274d23061fa907cb34&language=en-US`
       )
       .then(({ data }) => {
-        console.log(data);
         if (data.results.length !== 0) {
           this.setState({ keyVideo: data.results[0].key, loading: false });
         } else {
