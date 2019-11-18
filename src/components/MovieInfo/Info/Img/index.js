@@ -33,8 +33,8 @@ const Img = styled.img`
     props.actors &&
     css`
       height: 25rem;
-      @media (max-width: 991px) {
-        height: 20rem;
+      @media (max-width: 991px) and (min-width: 768px) {
+        height: 15rem;
       }
       @media (max-width: 575px) {
         height: 22rem;
