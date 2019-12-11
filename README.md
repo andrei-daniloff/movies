@@ -1,4 +1,4 @@
-https://guarded-headland-78983.herokuapp.com/discover/Popular/?page=1
+https://guarded-headland-78983.herokuapp.com
 
 Movie library via React.
 
