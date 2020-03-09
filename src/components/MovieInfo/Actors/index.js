@@ -86,7 +86,7 @@ class Actors extends Component {
           className="col-xs-offset-3 col-xs-6 col-sm-offset-0 col-sm-6 col-md-3 col-lg-3"
         >
           <Wrapper>
-            <ImgLoader imageURL={actor.credit_id} actors infoCard />
+            <ImgLoader imageURL={actor.profile_path} actors infoCard />
             <Name>{actor.name}</Name>
             <Role>{actor.character}</Role>
           </Wrapper>
