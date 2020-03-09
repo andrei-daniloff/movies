@@ -67,7 +67,7 @@ class Actors extends Component {
   render() {
     const { actors, loading, currentPage, totalPage, error } = this.state;
     const { changePage } = this;
-    let list = [];
+    let list;
     if (loading) {
       list = (
         <div className="col-lg-12">
@@ -82,11 +82,11 @@ class Actors extends Component {
       const sliceArr = actors.slice(begin, end);
       list = sliceArr.map(actor => (
         <div
-          key={actor.profile_path}
+          key={actor.credit_id}
           className="col-xs-offset-3 col-xs-6 col-sm-offset-0 col-sm-6 col-md-3 col-lg-3"
         >
           <Wrapper>
-            <ImgLoader imageURL={actor.profile_path} actors infoCard />
+            <ImgLoader imageURL={actor.credit_id} actors infoCard />
             <Name>{actor.name}</Name>
             <Role>{actor.character}</Role>
           </Wrapper>
@@ -95,7 +95,7 @@ class Actors extends Component {
     }
     return (
       <>
-        {list.length >= 1 ? (
+        {list ? (
           <>
             <div className="col-lg-12">
               <Element name="actors" className="actors">
